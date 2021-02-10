@@ -2,7 +2,7 @@ const express = require("express");
 const route = express.Router();
 const category = require("../controller/category");
 const product = require("../controller/product");
-
+// API
 
 /**
  * @description: add category
