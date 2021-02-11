@@ -9,7 +9,7 @@ const path = require("path")
 const app = express();
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // dotenv load 
 dotenv.config({path:'config.env'})
@@ -28,7 +28,9 @@ PORT = process.env.PORT || 8080;
 app.set("view engine","ejs");
 
 // set static path
-app.use('/js', express.static(path.join(__dirname, 'public')))
+app.use('/js', express.static(path.join(__dirname, 'assets/js')))
+app.use('/css', express.static(path.join(__dirname, 'assets/css')))
+app.use('/img', express.static(path.join(__dirname, 'assets/img')))
 
 // set view path
 ///app.set("views");

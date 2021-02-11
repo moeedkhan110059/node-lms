@@ -5,6 +5,8 @@ const renderService  = require("../services/render");
 
 router.get('/',renderService.home)
 
+router.get('/users/:page',renderService.pagination);
+
 
 
 
