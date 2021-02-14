@@ -32,11 +32,12 @@ app.use('/js', express.static(path.join(__dirname, 'assets/js')))
 app.use('/css', express.static(path.join(__dirname, 'assets/css')))
 app.use('/img', express.static(path.join(__dirname, 'assets/img')))
 
-// set view path
+// set view pat,
 ///app.set("views");
 
 // route import
 app.use('/api',route);
+app.use('/api/customer',require('./routes/customer_route'))
 
 // second route
 app.use('/',require('./routes/render_route'));

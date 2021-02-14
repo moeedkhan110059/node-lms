@@ -24,22 +24,6 @@ exports.getProducts =(req,res)=>{
     }).catch(err=>{
         return res.send({"status":constant.ERROR_CODE,message:err.message || constant.DATABASE_ERROR})
     })
-
-
-
-    // let page = req.params.page >= 1 ? req.params.page : 1;
-    // page = page - 1 ;  
-  
-    // Product.
-    // find({})
-    // .populate({ path: 'category_id',select: 'category_name'})
-    // .limit(postPerPage)
-    // .skip(postPerPage * page)
-    // .then(product=>{
-    //    return res.send({"status":constant.SUCCESS_CODE,"data":product})
-    // }).catch(err=>{
-    //     return res.send({"status":constant.ERROR_CODE,message:err.message || constant.DATABASE_ERROR})
-    // })
 }
 
 exports.getSingleProduct = (req,res)=>{   
