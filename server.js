@@ -37,7 +37,8 @@ app.use('/img', express.static(path.join(__dirname, 'assets/img')))
 
 // route import
 app.use('/api',route);
-app.use('/api/customer',require('./routes/customer_route'))
+app.use('/api/customer',require('./routes/customer_route'));
+app.use('/api/supplier',require('./routes/supplier_route'));
 
 // second route
 app.use('/',require('./routes/render_route'));
