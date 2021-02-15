@@ -48,5 +48,5 @@ Supplier = new mongoose.Schema({
     }
 })
 
-supplier.plugin(mongoosePaginate);
+Supplier.plugin(mongoosePaginate);
 module.exports = mongoose.model('supplier',Supplier);

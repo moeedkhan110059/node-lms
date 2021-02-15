@@ -39,6 +39,7 @@ app.use('/img', express.static(path.join(__dirname, 'assets/img')))
 app.use('/api',route);
 app.use('/api/customer',require('./routes/customer_route'));
 app.use('/api/supplier',require('./routes/supplier_route'));
+app.use('/api/user',require('./routes/user_route'));
 
 // second route
 app.use('/',require('./routes/render_route'));
