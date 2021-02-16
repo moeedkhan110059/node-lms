@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require('dotenv');
-var cors = require('cors')
+const cors = require('cors')
 const connectionDB = require("./database/connection");
 const route  = require("./routes/route");
 const path = require("path")
@@ -40,6 +40,7 @@ app.use('/api',route);
 app.use('/api/customer',require('./routes/customer_route'));
 app.use('/api/supplier',require('./routes/supplier_route'));
 app.use('/api/user',require('./routes/user_route'));
+app.use('/api/lead',require('./routes/lead_route'));
 
 // second route
 app.use('/',require('./routes/render_route'));
