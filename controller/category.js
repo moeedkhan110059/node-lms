@@ -3,6 +3,7 @@ const constant = require("../constant/constant");
 const Product  = require("../model/product_model")
 
 exports.addCategory  = (req,res)=>{
+    console.log(req.body);
     new Category(req.body).save().then(category=>{
         return res.send({status:constant.SUCCESS_CODE,message:constant.ADDED_SUCCESS})
 
@@ -12,12 +13,26 @@ exports.addCategory  = (req,res)=>{
 }
 
 exports.getCategories =(req,res)=>{
-    Category.find({}).then(category=>{
+    const option={
+        page:req.params.page,
+        limit: constant.POST_PER_PAGE
+    }
+    Category.paginate({},option).then(category=>{
        return res.send({status:constant.SUCCESS_CODE,data:category})
     }).catch(err=>{
         return res.send({status:constant.ERROR_CODE,message:err.message || constant.DATABASE_ERROR})
     })
 }
+
+exports.getAllCategories = (req,res)=>{
+    Category.find({}).then(category=>{
+        return res.send({status:constant.SUCCESS_CODE,data:category})
+     }).catch(err=>{
+         return res.send({status:constant.ERROR_CODE,message:err.message || constant.DATABASE_ERROR})
+     })
+}
+
+
 
 exports.getSingleCategory = (req,res)=>{   
     Category.findOne({_id:req.params.id}).then(category=>{        

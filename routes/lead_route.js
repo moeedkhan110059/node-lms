@@ -7,7 +7,7 @@ const Lead = require('../controller/lead');
  * @description: add lead
  * @method: POST / add_lead 
  */
-route.post('/add_lead')
+route.post('/add_lead',Lead.add_lead)
 
 
 

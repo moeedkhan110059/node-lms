@@ -24,4 +24,27 @@ let Lead = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('lead',Lead);
+// lead product schema
+
+leadProduct = new mongoose.Schema({
+    product_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"product"
+    },
+    quantity:{
+        type:String,
+        required:true
+    },
+    lead_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"lead"
+    },
+    price:{
+        type:String,
+        required:true
+    }
+})
+
+
+module.exports = mongoose.model('leadproduct',leadProduct,'leadProduct');
+module.exports = mongoose.model('lead',Lead,'lead');

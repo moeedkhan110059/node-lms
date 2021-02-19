@@ -16,7 +16,7 @@ exports.getProducts =(req,res)=>{
 
     const option={
         page:req.params.page,
-        limit: 1,
+        limit: constant.POST_PER_PAGE,
         populate:{ path: 'category_id',select: 'category_name'}
        }  
     Product.paginate({},option).then(product=>{

@@ -15,7 +15,14 @@ route.post('/add_category',category.addCategory)
  * @method: GET / category_list
  */
 
-route.get('/category_list',category.getCategories);
+route.get('/category_list/:page',category.getCategories);
+
+/**
+ * @description: get All categories
+ * @method: GET / get_all_catogory
+ */
+
+route.get('/get_all_catogory',category.getAllCategories);
 
 
 /**
