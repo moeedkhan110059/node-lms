@@ -34,7 +34,7 @@ exports.get_customer = (req,res)=>{
 exports.get_customer_list = (req,res)=>{
     const options = {
         page: req.params.page,
-        limit: constant.POST_PER_PAGE      
+        limit: constant.POST_PER_PAGE  
       };
     Customer.paginate({customer_status:1},options).then(customer=>{
        return res.send({status:constant.SUCCESS_CODE,data:customer}) 

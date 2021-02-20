@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate-v2');
 
-let Lead = new mongoose.Schema({
+Lead = new mongoose.Schema({
     lead_no:{
         type:String,
         required:true
@@ -19,14 +20,14 @@ let Lead = new mongoose.Schema({
     },
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'users'
+        ref:'user'
     }
 
 });
 
 // lead product schema
 
-leadProduct = new mongoose.Schema({
+leadProductSchema = new mongoose.Schema({
     product_id:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"product"
@@ -45,6 +46,11 @@ leadProduct = new mongoose.Schema({
     }
 })
 
+Lead.plugin(mongoosePaginate);
+const leadProducts = mongoose.model('leadproduct',leadProductSchema);
+const lead = mongoose.model('lead',Lead);
 
-module.exports = mongoose.model('leadproduct',leadProduct,'leadProduct');
-module.exports = mongoose.model('lead',Lead,'lead');
+module.exports = {
+    leadProducts:leadProducts,
+    lead:lead
+}
