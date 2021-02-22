@@ -46,10 +46,25 @@ exports.get_lead_products = (req,res)=>{
 }
 
 exports.edit_lead = (req,res)=>{
-
-
+  Lead.findByIdAndUpdate({_id:req.params.id},req.body).then(lead=>{
+    return res.send({status:constant.SUCCESS_CODE,message:constant.RECORD_UPDATED})
+  }).catch(err=>{
+    return res.send({status:constant.DATABASE,message:err.message || constant.DATABASE_ERROR})
+  });
 }
 
 exports.edit_lead_product = (req,res)=>{
-    
+  leadProduct.findByIdAndUpdate({_id:req.params.id},req.body).then(leadproduct=>{
+    return res.send({status:constant.SUCCESS_CODE,message:constant.RECORD_UPDATED})
+  }).catch(err=>{
+    return res.send({status:constant.DATABASE,message:err.message || constant.DATABASE_ERROR})
+  })    
+}
+
+exports.delete_lead_product = (req,res)=>{
+  leadProduct.findByIdAndDelete({_id:req.params.id}).then(leaddelete=>{
+    return res.send({status:constant.SUCCESS_CODE,message:constant.RECORD_DELETED})
+  }).catch(err=>{
+    return res.send({status:constant.DATABASE,message:err.message || constant.DATABASE_ERROR})
+  })
 }
