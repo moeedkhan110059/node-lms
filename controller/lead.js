@@ -2,7 +2,6 @@ const Lead = require('../model/lead_model').lead;
 const leadProduct = require('../model/lead_model').leadProducts;
 const constant  =require("../constant/constant")
 
-
 exports.add_lead = (req,res)=>{    
     leaddata = {
         lead_no:req.body.lead_no,

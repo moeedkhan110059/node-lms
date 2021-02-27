@@ -2,9 +2,11 @@ const Lead = require('../model/lead_model').lead
 const Quotation = require('../model/quotation_model').quotations
 const QuotationProduct = require("../model/quotation_model").quotationProduct
 const constant = require("../constant/constant");
+const PDF = require("html-pdf-node");
 
 exports.add_quotation = (req,res)=>{
-   Lead.findOne({_id:req.body.id}).then(lead=>{
+
+   Lead.findOne({_id:req.body.lead_id}).then(lead=>{
        if(!lead){
            return res.send({status:constant.NOT_FOUND,message:constant.RECORD_NOT_FOUND})
        }else{
@@ -12,7 +14,7 @@ exports.add_quotation = (req,res)=>{
             quotation_no:req.body.quotation_no,
             customer:lead.customer,
             customer_contact_person:lead.customer_contact_person,
-            lead_id:req.body.id
+            lead_id:req.body.lead_id
            };
            Quotation(newQuotation).save().then(quotation=>{
 
@@ -30,4 +32,70 @@ exports.add_quotation = (req,res)=>{
    }).catch(err=>{
        return res.send({status:constant.DATABASE,message:err.message || constant.DATABASE_ERROR})
    })
+}
+
+
+exports.get_quotation_list = (req,res)=>{
+    Quotation.aggregate([
+        {
+        $lookup :{
+            from:"customers",
+            localField:"customer",
+            foreignField:"_id",
+            as:"customer_detail"
+        }},
+        { $unwind: "$customer_detail" },
+        { $match:{"customer_detail.customer_status":1} },
+        {
+            $lookup:{
+                from:"customer_contact_people",
+                localField:"customer_contact_person",
+                foreignField:"_id",
+                as:"contact_person_detail"
+            }
+        },
+        { $unwind: "$contact_person_detail" },
+        {
+            $lookup:{
+                from:"leads",
+                localField:"lead_id",
+                foreignField:"_id",
+                as:"lead"
+            }
+        },
+        { $unwind: "$lead" },
+        {
+            $lookup:{
+                from:"quotationproducts",
+                localField:"_id",
+                foreignField:"quotation_id",
+                as:"quotation_product"
+            }
+        },
+        { $unwind: "$quotation_product" },
+        { $project : {
+            quotation_no:1,
+            status:1,
+            customer:1,
+            customer_status:"$customer_detail.customer_status",
+            customer_name:"$customer_detail.customer_name",
+            customer_code:"$customer_detail.customer_code",
+            customer_email:"$customer_detail.customer_email",
+            customer_contact:"$customer_detail.customer_contact",
+            customer_gst:"$customer_detail.customer_gst",
+            customer_code:"$customer_detail.customer_code",
+            contact_person_name:"$contact_person_detail.name",
+            contact_person_email:"$contact_person_detail.email",
+        }}
+        
+    ]).then(quotation=>{
+       return res.send({status:constant.SUCCESS_CODE,data:quotation})
+    }).catch(err=>{
+       return res.send({status:constant.DATABASE,message:err.message || constant.DATABASE_ERROR});
+    })
+
+}
+
+exports.quotation_pdf = (req,res)=>{
+
 }

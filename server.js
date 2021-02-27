@@ -31,6 +31,7 @@ app.set("view engine","ejs");
 app.use('/js', express.static(path.join(__dirname, 'assets/js')))
 app.use('/css', express.static(path.join(__dirname, 'assets/css')))
 app.use('/img', express.static(path.join(__dirname, 'assets/img')))
+app.use('/temp', express.static(path.join(__dirname, 'temp')))
 
 // set view pat,
 ///app.set("views");

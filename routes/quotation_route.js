@@ -11,6 +11,17 @@ const quotation  = require('../controller/quotation');
  */
 route.post('/add_quotation',quotation.add_quotation)
 
+/**
+ * @description: quotation pdf
+ * @method: GET / generate_quotation_pdf 
+ */
+route.get('/generate_quotation_pdf',quotation.quotation_pdf)
+
+/**
+ * @description: quotation list
+ * @method: GET / generate_quotation_pdf 
+ */
+route.get('/get_quotation_list',quotation.get_quotation_list)
 
 
 
