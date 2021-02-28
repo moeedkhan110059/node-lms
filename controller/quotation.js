@@ -2,7 +2,11 @@ const Lead = require('../model/lead_model').lead
 const Quotation = require('../model/quotation_model').quotations
 const QuotationProduct = require("../model/quotation_model").quotationProduct
 const constant = require("../constant/constant");
-const PDF = require("html-pdf-node");
+const ejs = require("ejs");
+const pdf = require("html-pdf");
+const path = require("path");
+const fs = require("fs");
+
 
 exports.add_quotation = (req,res)=>{
 
@@ -97,5 +101,14 @@ exports.get_quotation_list = (req,res)=>{
 }
 
 exports.quotation_pdf = (req,res)=>{
-
-}
+    let data = {};
+    const filePathName = path.resolve(__dirname, '../views/templates/','quotation-template.ejs');
+    const htmlString = fs.readFileSync(filePathName).toString();
+    let  options = { format: 'Letter' };
+    const ejsData = ejs.render(htmlString, data);
+    pdf.create(ejsData, options).toFile('temp/generatedfile.pdf',(err, response) => {
+        if (err) return console.log(err);
+        console.log(response)
+    }); 
+       
+ }
