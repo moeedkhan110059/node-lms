@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const mongoosePaginate = require('mongoose-paginate-v2');
+const moment = require('moment'); 
 
 let categoryModel = new mongoose.Schema({
     category_name:{
@@ -11,8 +12,8 @@ let categoryModel = new mongoose.Schema({
         default:1
     },
     added_date:{
-        type: Date,
-        default: Date.now      
+        type: Number,
+        default: moment().valueOf()      
     }
     
 });

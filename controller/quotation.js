@@ -2,6 +2,8 @@ const Lead = require('../model/lead_model').lead
 const Quotation = require('../model/quotation_model').quotations
 const QuotationProduct = require("../model/quotation_model").quotationProduct
 const constant = require("../constant/constant");
+const mongoose = require("mongoose")
+const Product = require("../model/product_model")
 const ejs = require("ejs");
 const pdf = require("html-pdf");
 const path = require("path");
@@ -75,8 +77,7 @@ exports.get_quotation_list = (req,res)=>{
                 foreignField:"quotation_id",
                 as:"quotation_product"
             }
-        },
-        { $unwind: "$quotation_product" },
+        },        
         { $project : {
             quotation_no:1,
             status:1,
@@ -90,6 +91,7 @@ exports.get_quotation_list = (req,res)=>{
             customer_code:"$customer_detail.customer_code",
             contact_person_name:"$contact_person_detail.name",
             contact_person_email:"$contact_person_detail.email",
+            quotation_product:"$quotation_product"
         }}
         
     ]).then(quotation=>{
@@ -101,14 +103,88 @@ exports.get_quotation_list = (req,res)=>{
 }
 
 exports.quotation_pdf = (req,res)=>{
-    let data = {};
-    const filePathName = path.resolve(__dirname, '../views/templates/','quotation-template.ejs');
-    const htmlString = fs.readFileSync(filePathName).toString();
-    let  options = { format: 'Letter' };
-    const ejsData = ejs.render(htmlString, data);
-    pdf.create(ejsData, options).toFile('temp/generatedfile.pdf',(err, response) => {
-        if (err) return console.log(err);
-        console.log(response)
-    }); 
+    Quotation.aggregate([{
+        $match:{_id:mongoose.Types.ObjectId(req.params.id)}
+        },
+        {
+        $lookup :{
+            from:"customers",
+            localField:"customer",
+            foreignField:"_id",
+            as:"customer_detail"
+        }},
+        { $unwind: "$customer_detail" },
+        {
+            $lookup:{
+                from:"customer_contact_people",
+                localField:"customer_contact_person",
+                foreignField:"_id",
+                as:"contact_person_detail"
+            }
+        },
+        { $unwind: "$contact_person_detail" },
+        {
+            $lookup:{
+                from:"leads",
+                localField:"lead_id",
+                foreignField:"_id",
+                as:"lead"
+            }
+        },
+        { $unwind: "$lead" },
+        {
+            $lookup:{
+                from:"quotationproducts",
+                localField:"_id",
+                foreignField:"quotation_id",
+                as:"quotation_product"
+            }
+        },
        
+        { $project : {
+            quotation_no:1,
+            status:1,
+            customer:1,
+            customer_status:"$customer_detail.customer_status",
+            customer_name:"$customer_detail.customer_name",
+            customer_code:"$customer_detail.customer_code",
+            customer_email:"$customer_detail.customer_email",
+            customer_contact:"$customer_detail.customer_contact",
+            customer_gst:"$customer_detail.customer_gst",
+            customer_code:"$customer_detail.customer_code",
+            contact_person_name:"$contact_person_detail.name",
+            contact_person_email:"$contact_person_detail.email",
+            quotation_product:"$quotation_product"
+            
+        }}       
+    ]).then(async quotation=>{
+        /**
+         * product name against quotation product
+         */        
+        const quoted_product = quotation[0].quotation_product;
+        const resObj = quoted_product.map(async (result, i) =>{ 
+             const product_ = await Product.findOne({_id:result.product_id})           
+             result.productname = product_.product_name
+             return result;
+        });
+        const quotation_p = await Promise.all(resObj);
+        /**
+         * generate quotation pdf
+         */
+        file_name = new Date().getTime().toString();
+        quotation[0].quotation_product = quotation_p
+        const filePathName = path.resolve(__dirname, '../views/templates/','quotation-template.ejs');
+        const htmlString = fs.readFileSync(filePathName).toString();
+        let  options = { format: 'Letter' };
+        const ejsData = ejs.render(htmlString, {quotation:quotation});
+        pdf.create(ejsData, options).toFile('temp/quotation'+file_name+'.pdf',(err, response) => {
+            if (err){
+                return res.send({status:constant.DATABASE,message:err.message || constant.DATABASE_ERROR});
+            } else{
+                return res.send({status:constant.SUCCESS_CODE,data:response});
+            }            
+        });        
+    }).catch(err=>{
+       return res.send({status:constant.DATABASE,message:err.message || constant.DATABASE_ERROR});
+    })       
  }

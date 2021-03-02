@@ -1,65 +1,155 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
+	<title>Purchase Order</title>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+​
+<style type="text/css">​
+	*{margin: 0px; margin: 0px; color: #000;}
+	body {font-family: 'Open Sans', sans-serif;}
+	body {padding: 20px;}
+	strong {font-weight: 700;}
+	tr {page-break-inside: avoid; page-break-after: auto;}
+	table {width: 100%; border-spacing: 0; border-collapse: collapse; page-break-inside: auto;}
+​
+	h2 {font-size: 25px; padding: 5px;}
+	h3 {font-size: 18px; font-weight: 600; padding: 5px;}
+	h4 {font-size: 16px; font-weight: 500; padding: 5px;}
+	h5 {font-size: 13px; padding: 5px;}
+	h6 {font-size: 10px; padding: 5px;}
+	p {font-size: 14px; line-height: 20px; padding: 5px;}
+​
+​
+	table td, table th {font-size: 14px; border: 1px solid #000;}
 </style>
 </head>
 <body>
-
-<h2>HTML Table</h2>
-
-<table>
-  <tr>
-    <th>Company</th>
-    <th>Contact</th>
-    <th>Country</th>
-  </tr>
-  <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
-  </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
-  <tr>
-    <td>Ernst Handel</td>
-    <td>Roland Mendel</td>
-    <td>Austria</td>
-  </tr>
-  <tr>
-    <td>Island Trading</td>
-    <td>Helen Bennett</td>
-    <td>UK</td>
-  </tr>
-  <tr>
-    <td>Laughing Bacchus Winecellars</td>
-    <td>Yoshi Tannamuri</td>
-    <td>Canada</td>
-  </tr>
-  <tr>
-    <td>Magazzini Alimentari Riuniti</td>
-    <td>Giovanni Rovelli</td>
-    <td>Italy</td>
-  </tr>
+​
+<table width="100%">
+	<tr>
+		<td width="20%" style="border-right: 0px;" colspan="2"><img src="dubble-logo.png" style="width: 60%; padding: 5px;"></td>
+		<td colspan="6" align="center" valign="top" style="border-left: 0px; padding-right: 130px; border-bottom: 0px;">
+			<h2><%= quotation[0].customer_name %></h2>
+			<p><br>
+				A1, Sector-60, Noida (UP) -210045 <br>
+				Phone: 0210-26548754, Email: yourmailid@mail.com
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td align="center" colspan="7" style="border-top: 0px;"><h3>Purchase Order</h3></td>
+	</tr>
+	<tr>
+		<td colspan="3" style="border: 1px solid #000; border-right: 0px;">
+			<h4>To,</h4>
+			<h4>SAL PAPERS PVT. LTD. <br> S-25, UPSIDC COMPLEX, INDUSTRIAL AREA, LONI</h4>
+			<h4><strong>State Code:</strong> -09</h4>
+			<h4><strong>State Name:</strong> UTTAR PRADESH</h4>
+		</td>
+		<td valign="top" colspan="4" style="border-left: 0px;">
+			<table>
+				<tr>
+					<td style="border: 0px;"><strong>Order No:</strong></td>
+					<td style="border: 0px;">197871403 - NPP</td>
+				</tr>
+				<tr>
+					<td style="border: 0px;"><strong>Order Date:</strong></td>
+					<td style="border: 0px;">18-01-2020</td>
+				</tr>
+				<tr>
+					<td style="border: 0px;"><strong>Department :</strong></td>
+					<td style="border: 0px;">ABCDE</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr align="center">
+		<td style="padding: 5px;" width="5%"><strong>No.</strong></td>
+		<td width="15%"><strong>HSN Code</strong></td>
+		<td width="35%"><strong>Description</strong></td>
+		<td width="10%"><strong>UOM</strong></td>
+		<td width="10%"><strong>Rate</strong></td>
+		<td width="10%"><strong>Qty</strong></td>
+		<td width="15%"><strong>Value</strong></td>
+	</tr>
+	<tr>
+		<td align="center" style="border: 0px; border-left: 1px solid; border-right: 1px solid">1</td>
+		<td align="center" valign="top" style="border: 0px; border-right: 1px solid">DKLUXEXXXXKE<br>90<br>HSNCode-4810</td>
+		<td align="left" valign="top" style="border: 0px;border-right: 1px solid; padding: 5px;">REL PAPER - 190MM X 62GSM <br>
+			<p>RAW MATERIAL RELEASE LINER XX MATERIAL XXX</p>
+			
+		</td>
+		<td align="center" valign="top" style="border: 0px;border-right: 1px solid">KG</td>
+		<td align="center" valign="top" style="border: 0px;border-right: 1px solid">135</td>
+		<td align="right" valign="top" style="border: 0px;border-right: 1px solid">300.000</td>
+		<td align="right" valign="top" style="border: 0px;border-right: 1px solid">40500.00</td>
+	</tr>
+​
+	<tr>
+		<td align="center"style="border: 0px; border-left: 1px solid; border-right: 1px solid">2</td>
+		<td align="center" valign="top" style="border: 0px;border-right: 1px solid">DKLUXEXXXXKE<br>90<br>HSNCode-4810</td>
+		<td align="left" valign="top" style="border: 0px;border-right: 1px solid; padding: 5px;">REL PAPER - 190MM X 62GSM <br>
+			<p>RAW MATERIAL RELEASE LINER XX MATERIAL XXX</p>
+​
+​
+		</td>
+		<td align="center" valign="top" style="border: 0px;border-right: 1px solid">KG</td>
+		<td align="center" valign="top" style="border: 0px;border-right: 1px solid">135</td>
+		<td align="right" valign="top" style="border: 0px;border-right: 1px solid">300.000</td>
+		<td align="right" valign="top" style="border: 0px;border-right: 1px solid">40500.00</td>
+	</tr>
+​
+	<tr>
+		<td align="center" style="border: 0px; border-left: 1px solid; border-right: 1px solid; padding-bottom: 150px;" >3</td>
+		<td align="center" valign="top" style="border: 0px;border-right: 1px solid">DKLUXEXXXXKE<br>90<br>HSNCode-4810</td>
+		<td align="left" valign="top" style="border: 0px;border-right: 1px solid; padding: 5px;">REL PAPER - 190MM X 62GSM <br>
+			<p>RAW MATERIAL RELEASE LINER XX MATERIAL XXX</p>
+​
+​
+		</td>
+		<td align="center" valign="top" style="border: 0px;border-right: 1px solid">KG</td>
+		<td align="center" valign="top" style="border: 0px;border-right: 1px solid">135</td>
+		<td align="right" valign="top" style="border: 0px;border-right: 1px solid">300.000</td>
+		<td align="right" valign="top" style="border: 0px;border-right: 1px solid;">40500.00</td>
+	</tr>
+	<tr>
+		<td colspan="7" align="left" style="padding: 5px;"><strong>Remark :</strong>PRICE AS PER LPO.1978517777 DT.04/11/2019</td>
+	</tr>
+	<tr>
+		<td colspan="7" style="padding-bottom: 120px;"></td>
+	</tr>
+​
+	<tr>
+		<td colspan="5" style="padding: 0px;" >
+			<table>
+				<tr>
+					<td style="border: 0px; border-bottom: 1px solid; padding: 5px;">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua.<br> Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat.<br> Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur.</td>
+				</tr>
+				<tr>
+					<td style="border: 0px; padding: 5px;">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua.<br> Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat.</td>
+				</tr>
+			</table>
+		</td>
+		<td colspan="2">
+			<h4 style="vertical-align: top; text-align: center;">For SAL PAPERS</h4>
+			<br><br><br><br><br><br>
+			<h5 style="text-align: center;">Sign. Authorized</h5>
+		</td>
+	</tr>
+​
 </table>
-
+​
+​
+​
 </body>
 </html>
