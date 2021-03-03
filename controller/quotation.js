@@ -188,3 +188,92 @@ exports.quotation_pdf = (req,res)=>{
        return res.send({status:constant.DATABASE,message:err.message || constant.DATABASE_ERROR});
     })       
  }
+
+ exports.add_quotation_product = (req,res)=>{
+     QuotationProduct(req.body).save().then(quotation_product=>{
+         return res.send({status:constant.SUCCESS_CODE,message:constant.ADDED_SUCCESS})
+     }).catch(err=>{
+         return res.send({status:constant.DATABASE,message:err.message || constant.DATABASE_ERROR})
+     })
+ }
+
+ exports.delete_quotation_product = (req,res)=>{
+     QuotationProduct.findByIdAndDelete({_id:req.params.id}).then(response=>{
+         return res.send({status:constant.SUCCESS_CODE,message:constant.RECORD_DELETED})
+     }).catch(err=>{
+         return res.send({status:constant.DATABASE,message:err.message|| constant.DATABASE_ERROR})
+     })
+ }
+
+ exports.update_quotation_product = (req,res)=>{
+    QuotationProduct.findByIdAndUpdate({_id:req.params.id},req.body).then(response=>{
+        return res.send({status:constant.SUCCESS_CODE,message:constant.RECORD_UPDATED})
+    }).catch(err=>{
+        return res.send({status:constant.DATABASE,message:err.message|| constant.DATABASE_ERROR})
+    })
+}
+
+
+ exports.quotation_detail = (req,res)=>{
+    Quotation.aggregate([
+        {
+            $match:{_id:mongoose.Types.ObjectId(req.params.id)}
+        },
+        {
+        $lookup :{
+            from:"customers",
+            localField:"customer",
+            foreignField:"_id",
+            as:"customer_detail"
+        }},
+        { $unwind: "$customer_detail" },
+        { $match:{"customer_detail.customer_status":1} },
+        {
+            $lookup:{
+                from:"customer_contact_people",
+                localField:"customer_contact_person",
+                foreignField:"_id",
+                as:"contact_person_detail"
+            }
+        },
+        { $unwind: "$contact_person_detail" },
+        {
+            $lookup:{
+                from:"leads",
+                localField:"lead_id",
+                foreignField:"_id",
+                as:"lead"
+            }
+        },
+        { $unwind: "$lead" },
+        {
+            $lookup:{
+                from:"quotationproducts",
+                localField:"_id",
+                foreignField:"quotation_id",
+                as:"quotation_product"
+            }
+        },        
+        { $project : {
+            quotation_no:1,
+            status:1,
+            customer:1,
+            customer_status:"$customer_detail.customer_status",
+            customer_name:"$customer_detail.customer_name",
+            customer_code:"$customer_detail.customer_code",
+            customer_email:"$customer_detail.customer_email",
+            customer_contact:"$customer_detail.customer_contact",
+            customer_gst:"$customer_detail.customer_gst",
+            customer_code:"$customer_detail.customer_code",
+            contact_person_name:"$contact_person_detail.name",
+            contact_person_email:"$contact_person_detail.email",
+            quotation_product:"$quotation_product"
+        }}
+        
+    ]).then(quotation=>{
+       return res.send({status:constant.SUCCESS_CODE,data:quotation})
+    }).catch(err=>{
+       return res.send({status:constant.DATABASE,message:err.message || constant.DATABASE_ERROR});
+    })
+
+ }
