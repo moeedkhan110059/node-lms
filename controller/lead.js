@@ -1,10 +1,11 @@
 const Lead = require('../model/lead_model').lead;
 const leadProduct = require('../model/lead_model').leadProducts;
 const constant  =require("../constant/constant")
-
-exports.add_lead = (req,res)=>{    
-    leaddata = {
-        lead_no:req.body.lead_no,
+const siteSetting = require("../common/common_function");
+exports.add_lead = async (req,res)=>{ 
+  const Increament  = await siteSetting.commonSetting("lead");  
+      leaddata = {
+        lead_no:"LEAD-"+Increament.lead,
         customer:req.body.customer,
         customer_contact_person:req.body.customer_contact_person,
         user:req.body.user        
@@ -22,6 +23,7 @@ exports.add_lead = (req,res)=>{
 }
 
 exports.get_all_leads = (req,res)=>{
+  
     const options = {
         page: req.params.page,
         limit: constant.POST_PER_PAGE,

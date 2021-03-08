@@ -2,6 +2,7 @@ const Lead = require('../model/lead_model').lead
 const Quotation = require('../model/quotation_model').quotations
 const QuotationProduct = require("../model/quotation_model").quotationProduct
 const constant = require("../constant/constant");
+const siteSetting = require("../common/common_function")
 const mongoose = require("mongoose")
 const Product = require("../model/product_model")
 const ejs = require("ejs");
@@ -12,12 +13,13 @@ const fs = require("fs");
 
 exports.add_quotation = (req,res)=>{
 
-   Lead.findOne({_id:req.body.lead_id}).then(lead=>{
+   Lead.findOne({_id:req.body.lead_id}).then(async lead=>{
        if(!lead){
            return res.send({status:constant.NOT_FOUND,message:constant.RECORD_NOT_FOUND})
        }else{
+        const Increament  = await siteSetting.commonSetting("quotation"); 
            let newQuotation = {
-            quotation_no:req.body.quotation_no,
+            quotation_no:"QUOTE-"+Increament.quotation,
             customer:lead.customer,
             customer_contact_person:lead.customer_contact_person,
             lead_id:req.body.lead_id

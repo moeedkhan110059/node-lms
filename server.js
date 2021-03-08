@@ -43,6 +43,8 @@ app.use('/api/supplier',require('./routes/supplier_route'));
 app.use('/api/user',require('./routes/user_route'));
 app.use('/api/lead',require('./routes/lead_route'));
 app.use('/api/quotation',require('./routes/quotation_route'));
+app.use('/api/order',require('./routes/order_route'));
+
 
 // second route
 app.use('/',require('./routes/render_route'));
