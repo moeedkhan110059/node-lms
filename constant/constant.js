@@ -6,7 +6,8 @@ module.exports  = {
     NOT_FOUND: 404,
     DATABASE:500,
     POST_PER_PAGE:10,
-    ALREADY_EXIST:203,    
+    ALREADY_EXIST:203,
+    INVALID_TOKEN:401,
 //  messages
     DATABASE_ERROR:'Database is Not Responding',
     ADDED_SUCCESS: 'Record Added Successfully',    
@@ -14,6 +15,8 @@ module.exports  = {
     RECORD_DELETED:'Record Deleted Successfully',
     RECORD_UPDATED:'Record Updated Successfully',
     ALREADY_EXIST_MSG:'Already Exist',
+    INVALID_TOKEN_MSG:'Invalid Token',
+    TOKEN_NOT_FOUND:'Token not found'
     
 
 }

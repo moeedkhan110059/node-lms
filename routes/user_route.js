@@ -2,6 +2,12 @@ const express  = require("express");
 const route = express.Router();
 const User  = require('../controller/user');
 
+/**
+ * @description: add new user
+ * @method: POST /add_customer
+ */
+
+//route.post('/login',User.login);
 
 /**
  * @description: add new user
